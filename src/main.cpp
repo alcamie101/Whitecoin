@@ -41,8 +41,8 @@ static CBigNum bnProofOfStakeLimit(~uint256(0) >> 20);
 static CBigNum bnProofOfWorkLimitTestNet(~uint256(0) >> 20);
 static CBigNum bnProofOfStakeLimitTestNet(~uint256(0) >> 20);
 
-unsigned int nStakeMinAge = 60 * 60 * 24 * 2;	// minimum age for coin age: 2d
-unsigned int nStakeMaxAge = -1;	// stake age of full weight: -1
+unsigned int nStakeMinAge = 60 * 60 * 24 * .5;	// minimum age for coin age: 12h
+unsigned int nStakeMaxAge = 60 * 60 * 24 * 56;	// stake age of full weight: 56d
 unsigned int nStakeTargetSpacing = 90;			// 90 sec block spacing
 
 int64 nChainStartTime = 1397400948;
@@ -2123,6 +2123,10 @@ bool CBlock::AcceptBlock()
         return DoS(10, error("AcceptBlock() : prev block not found"));
     CBlockIndex* pindexPrev = (*mi).second;
     int nHeight = pindexPrev->nHeight+1;
+    
+    // Check proof of work has reached block 13900
+    if (IsProofOfWork() && nHeight > CUTOFF_POW_BLOCK)
+        return DoS(100, error("AcceptBlock() : No proof-of-work allowed anymore (height = %d)", nHeight));
 
     // Check proof-of-work or proof-of-stake
     if (nBits != GetNextTargetRequired(pindexPrev, IsProofOfStake()))
