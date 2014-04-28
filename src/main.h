@@ -40,7 +40,7 @@ static const int64 MAX_MINT_PROOF_OF_STAKE = 0.02 * COIN;	// 5% annual interest
 
 static const int64 MIN_TXOUT_AMOUNT = MIN_TX_FEE;
 // Proof-of-work cutoff block
-static const int CUTOFF_POW_BLOCK = 30000;
+static const int CUTOFF_POW_BLOCK = 13900;
 
 inline bool MoneyRange(int64 nValue) { return (nValue >= 0 && nValue <= MAX_MONEY); }
 // Threshold for nLockTime: below this value it is interpreted as block number, otherwise as UNIX timestamp.
