@@ -2124,7 +2124,7 @@ bool CBlock::AcceptBlock()
     CBlockIndex* pindexPrev = (*mi).second;
     int nHeight = pindexPrev->nHeight+1;
     
-    // Check proof of work has reached block 13,900
+    // Check proof of work has reached block 13900
     if (IsProofOfWork() && nHeight > CUTOFF_POW_BLOCK)
         return DoS(100, error("AcceptBlock() : No proof-of-work allowed anymore (height = %d)", nHeight));
 
